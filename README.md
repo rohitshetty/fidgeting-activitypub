@@ -26,3 +26,7 @@ A simple fastapi server that can be [webfingered](https://en.wikipedia.org/wiki/
 2. [_loophole_](https://loophole.cloud/) for exposing my local server instance to other federated instances for testing (At this point just my Mastodon instance that I am on)
 
 ## Implementation logs
+
+_2022-11-27 23:00 IST_
+
+FastAPI hello world. Installed black for the formatting
