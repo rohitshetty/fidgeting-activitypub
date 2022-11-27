@@ -1,6 +1,8 @@
-from fastapi import FastAPI
+from fastapi import Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
+from functools import lru_cache
+from app.src.routers import webfinger
+from app.src.routers import actor
 
 app = FastAPI()
 
@@ -16,7 +18,5 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
+app.include_router(webfinger.router)
+app.include_router(actor.router)

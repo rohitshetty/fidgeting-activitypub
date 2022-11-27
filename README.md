@@ -18,7 +18,65 @@ _Some places I started looking into_
 
 ## What does this project do?
 
-A simple fastapi server that can be [webfingered](https://en.wikipedia.org/wiki/WebFinger) to find this account in other federated instances like Mastodon and then being able to post post content that would come up in the feed of federated instances (With probably being able to follow feature be a side effect)
+A simple fastapi server that can be
+
+- [x] [webfingered](https://en.wikipedia.org/wiki/WebFinger) to find this account in other federated instances like Mastodon and
+- [ ] then being able to post content that would come up in the feed of federated instances
+- [ ] (With probably being able to follow be a side effect)
+
+## Running
+
+_Install dependencies using:_
+
+`pip install -r requirements.txt`
+
+_Setup loophole.site subdomain_
+
+[loophole](https://loophole.cloud/) is a reverse proxy useful for exposing your local port 8000 of the server to the internet.
+
+[Download](https://loophole.cloud/download) cli for exposing local port 8000 to the internet safely.
+Follow [This document](https://loophole.cloud/docs/guides/expose) on how to do it, and get a unique subdomain you can use.
+
+_Create .env file_
+Copy the sample.env file to .env file and update relevant attributes.
+
+_Create secret and public pem file_
+
+Create public and private pem file using
+
+```
+openssl genrsa -out private.pem 2048
+openssl rsa -in private.pem -outform PEM -pubout -out public.pem
+
+```
+
+and keep it in a gitignored folder (./secrets is already gitignored).
+Update `PUBLIC_KEY_PEM_PATH` and `PRIVATE_KEY_PEM_PATH` for the files from the root of the folder (check sample.env where the files reside in `./secrets`)
+
+_To start server:_
+
+`make start`
+
+## Webfinger
+
+Webfinger is a protocol using which activitypub supporting sites can identify and search for users in other instances.
+
+This is a simple HTTP GET call to `/.well-known/webfinger?resource=acct:user@example.com`.
+The response of json will contain reference to "Actor" - in activitypub, actor can be any
+entity like user, company, group of people , etc.
+
+In this example it is a user, whose username is defined in the `.env`
+
+Other activitypub supporting instances hit this endpoint when someone searches for the user from other instances, and the response to this will contain a pointer to the api which can be called to get the details about the user/actor.
+
+Actor API just defines the public attributes of the users like name, bio, etc, along with a public key that will be used for federation verifications in the future.
+
+### Testing
+
+After starting the loophole, start the server - go to any federated site of your choice that you have account in, in my case hachyderm.io - which is a mastodon instance, and search for the user.
+You should be able to view the account and other details
+
+![Image search of the test user shown in mastodon instance](./docs/assets/webfinger.png)
 
 ## Tools
 
@@ -30,3 +88,11 @@ A simple fastapi server that can be [webfingered](https://en.wikipedia.org/wiki/
 _2022-11-27 23:00 IST_
 
 FastAPI hello world. Installed black for the formatting
+
+_2022-11-28 02:00 IST_
+
+Implemented basic actor endpoint and webfinger endpoint.
+Now can search the user from other activitypub supporting
+sites like Mastodon.
+
+We serve a static user with username defined in .env
