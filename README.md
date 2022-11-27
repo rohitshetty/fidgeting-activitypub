@@ -1,4 +1,4 @@
-# Kicktire ActivityPub
+# Fidgeting (around the) ActivityPub
 
 ## Why?
 
