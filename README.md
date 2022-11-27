@@ -59,7 +59,7 @@ _To start server:_
 
 ## Webfinger
 
-Webfinger is a protocol using which activitypub supporting sites can identify and search for users in other instances.
+Webfinger is a protocol generally used to identify exact location of thing or user based on the uri. Because in fediverse (Example mastodon) users are in different instances this is useful. Mastodon uses [Webfinger](https://docs.joinmastodon.org/spec/webfinger/) so that user from one instance can search for users of other instances if they know their username and host name (Think how for email you need to know the username as well as the domain name, example gmail.com)
 
 This is a simple HTTP GET call to `/.well-known/webfinger?resource=acct:user@example.com`.
 The response of json will contain reference to "Actor" - in activitypub, actor can be any
@@ -67,9 +67,9 @@ entity like user, company, group of people , etc.
 
 In this example it is a user, whose username is defined in the `.env`
 
-Other activitypub supporting instances hit this endpoint when someone searches for the user from other instances, and the response to this will contain a pointer to the api which can be called to get the details about the user/actor.
+Other Mastodon, or webfinger/activitypub supporting instances hit this endpoint when someone searches for the user from other instances, and the response to this will contain a pointer to the api which can be called to get the details about the user/actor.
 
-Actor API just defines the public attributes of the users like name, bio, etc, along with a public key that will be used for federation verifications in the future.
+Actor API just defines the public attributes of the users like name, bio, etc, along with a public key that will be used for federation verifications in the future. This basically defines the user/actor from activitypub perspective.
 
 ### Testing
 
@@ -92,7 +92,6 @@ FastAPI hello world. Installed black for the formatting
 _2022-11-28 02:00 IST_
 
 Implemented basic actor endpoint and webfinger endpoint.
-Now can search the user from other activitypub supporting
-sites like Mastodon.
+Now can search the user from other mastodon instances for the static user.
 
 We serve a static user with username defined in .env
