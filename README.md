@@ -59,7 +59,13 @@ _To start server:_
 
 ## Webfinger
 
-Webfinger is a protocol generally used to identify exact location of thing or user based on the uri. Because in fediverse (Example mastodon) users are in different instances this is useful. Mastodon uses [Webfinger](https://docs.joinmastodon.org/spec/webfinger/) so that user from one instance can search for users of other instances if they know their username and host name (Think how for email you need to know the username as well as the domain name, example gmail.com)
+_"Webfinger can be used to discover information about people or other entities on the Internet using standard HTTP methods. WebFinger discovers
+information for a URI that might not be usable as a locator
+otherwise, such as account or email URIs"_ - [RFC 7033](https://www.rfc-editor.org/rfc/rfc7033)
+
+Because in fediverse (Example mastodon) users are in different instances this is useful so that other users on other instances can be searched with a URI (example like @user@example.com). Think how for email you need to know the username as well as the domain name, example gmail.com
+
+Mastodon too uses [Webfinger](https://docs.joinmastodon.org/spec/webfinger/) for same purpose.
 
 This is a simple HTTP GET call to `/.well-known/webfinger?resource=acct:user@example.com`.
 The response of json will contain reference to "Actor" - in activitypub, actor can be any
